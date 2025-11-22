@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Devs from "./pages/Devs";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import PredictionSelect from "./pages/PredictionSelect";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/devs" element={<Devs />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/prediction-select" element={<PredictionSelect />} />
+        <Route path="/diabetic" element={<div style={{ padding: '120px 20px', textAlign: 'center' }}><h1>Diabetic Retinopathy Detection</h1><p>This page will integrate with your diabetic detection model at <code>Diabetic_Retinopathy_Detection/app.py</code></p><a href="/prediction-select">← Back to Selection</a></div>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioVista • Health Advice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap');
+
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-success: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-warning: linear-gradient(135deg, #fee140 0%, #fa709a 100%);
+            --gradient-danger: linear-gradient(135deg, #fa709a 0%, #f5576c 100%);
+            --text-primary: #1a202c;
+            --text-secondary: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 12px;
+            border-radius: 12px;
+            background: conic-gradient(from 180deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+            animation: rotate 8s linear infinite;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .level-1,
+        .level-2 {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .level-3 {
+            background: var(--gradient-warning);
+            color: white;
+        }
+
+        .level-4,
+        .level-5 {
+            background: var(--gradient-danger);
+            color: white;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .advice-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .advice-item {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .advice-item:hover {
+            background: rgba(102, 126, 234, 0.08);
+            transform: translateX(4px);
+        }
+
+        .advice-item strong {
+            color: #667eea;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .advice-item p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 87, 108, 0.1) 0%, rgba(250, 112, 154, 0.1) 100%);
+            border: 2px solid rgba(245, 87, 108, 0.3);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .warning-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #f5576c;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-box p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn.primary {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn.primary:hover {
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.45);
+        }
+
+        @media (max-width: 640px) {
+            .title {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"></div>
+            <h1 class="title">Health Advice</h1>
+            <p class="subtitle">Personalized recommendations based on your risk level</p>
+            <div class="level-badge level-{{ level }}">Risk Level {{ level }}</div>
+        </div>
+
+        <div class="card">
+            {% if level == 1 %}
+            <div class="info-box">
+                <h3>✅ Excellent Health Status</h3>
+                <p>Your cardiovascular risk is very low. Keep up the great work maintaining your healthy lifestyle!</p>
+            </div>
+
+            <h2 class="section-title">Maintenance Recommendations</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>Regular Exercise</strong>
+                    <p>Continue with at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous
+                        activity per week.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Balanced Diet</strong>
+                    <p>Maintain a heart-healthy diet rich in fruits, vegetables, whole grains, and lean proteins.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Annual Check-ups</strong>
+                    <p>Schedule regular health screenings to monitor your cardiovascular health.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Stress Management</strong>
+                    <p>Practice relaxation techniques like meditation, yoga, or deep breathing exercises.</p>
+                </li>
+            </ul>
+
+            {% elif level == 2 %}
+            <div class="info-box">
+                <h3>✓ Good Health Status</h3>
+                <p>Your cardiovascular risk is low, but there's room for improvement. Focus on prevention.</p>
+            </div>
+
+            <h2 class="section-title">Prevention Recommendations</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>Increase Physical Activity</strong>
+                    <p>Aim for 30-60 minutes of moderate exercise most days of the week.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Monitor Blood Pressure</strong>
+                    <p>Check your blood pressure regularly and keep it below 120/80 mmHg.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Healthy Weight</strong>
+                    <p>Maintain a healthy BMI (18.5-24.9) through balanced diet and exercise.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Limit Sodium</strong>
+                    <p>Reduce salt intake to less than 2,300mg per day (about 1 teaspoon).</p>
+                </li>
+            </ul>
+
+            {% elif level == 3 %}
+            <div class="warning-box">
+                <h3>⚠️ Moderate Risk Detected</h3>
+                <p>Your cardiovascular risk is moderate. Consider consulting with a healthcare professional for
+                    personalized guidance.</p>
+            </div>
+
+            <h2 class="section-title">Important Actions</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>Medical Consultation</strong>
+                    <p>Schedule an appointment with your doctor for a comprehensive cardiovascular evaluation.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Cholesterol Management</strong>
+                    <p>Get your cholesterol levels checked and discuss treatment options if needed.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Lifestyle Changes</strong>
+                    <p>Implement immediate dietary changes: reduce saturated fats, increase fiber intake.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Regular Monitoring</strong>
+                    <p>Track your blood pressure, weight, and other vital signs weekly.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Quit Smoking</strong>
+                    <p>If you smoke, seek help to quit immediately. Smoking significantly increases cardiovascular risk.
+                    </p>
+                </li>
+            </ul>
+
+            {% elif level >= 4 %}
+            <div class="warning-box">
+                <h3>🚨 High Risk - Immediate Action Required</h3>
+                <p>Your cardiovascular risk is elevated. We strongly recommend consulting with a cardiologist as soon as
+                    possible.</p>
+            </div>
+
+            <h2 class="section-title">Urgent Recommendations</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>See a Cardiologist</strong>
+                    <p>Schedule an appointment with a cardiologist immediately for comprehensive evaluation and
+                        treatment plan.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Medication Review</strong>
+                    <p>Discuss with your doctor about medications to manage blood pressure, cholesterol, or other risk
+                        factors.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Emergency Awareness</strong>
+                    <p>Learn the warning signs of heart attack and stroke. Call emergency services if you experience
+                        symptoms.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Strict Lifestyle Modifications</strong>
+                    <p>Follow a cardiac rehabilitation program if recommended by your healthcare provider.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Close Monitoring</strong>
+                    <p>Regular follow-ups with your healthcare team to track progress and adjust treatment.</p>
+                </li>
+            </ul>
+            {% endif %}
+
+            <div class="info-box" style="margin-top: 24px;">
+                <h3>📋 General Tips for Heart Health</h3>
+                <p>Eat a Mediterranean-style diet, stay hydrated, get 7-9 hours of sleep, manage stress, limit alcohol,
+                    and avoid tobacco. Small changes can make a big difference!</p>
+            </div>
+
+            <div class="actions">
+                <a href="/" class="btn">← New Analysis</a>
+                <a href="https://www.heart.org" target="_blank" class="btn primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

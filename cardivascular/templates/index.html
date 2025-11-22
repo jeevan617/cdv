@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioVista • Analysis</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap');
+
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-primary: #1a202c;
+            --text-secondary: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 12px;
+            border-radius: 12px;
+            background: conic-gradient(from 180deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+            animation: rotate 8s linear infinite;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .hint {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .uploader {
+            border: 2px dashed rgba(102, 126, 234, 0.3);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            background: rgba(102, 126, 234, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .uploader:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            background: rgba(102, 126, 234, 0.06);
+        }
+
+        .uploader input {
+            display: none;
+        }
+
+        .uploader label {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .uploader label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.45);
+        }
+
+        .preview {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #retinaImg {
+            max-width: 100%;
+            max-height: 280px;
+            border-radius: 12px;
+            border: 2px solid rgba(102, 126, 234, 0.15);
+            display: none;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 11px 24px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn.primary {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn.primary:hover:not(:disabled) {
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.45);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .overlay .panel {
+            background: white;
+            border-radius: 16px;
+            padding: 24px 32px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 3px solid #e2e8f0;
+            border-top-color: #667eea;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .dots div {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: bounce 0.9s infinite alternate;
+        }
+
+        .dots div:nth-child(1) {
+            background: #667eea;
+            animation-delay: 0s;
+        }
+
+        .dots div:nth-child(2) {
+            background: #764ba2;
+            animation-delay: 0.15s;
+        }
+
+        .dots div:nth-child(3) {
+            background: #f093fb;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-6px);
+                opacity: 0.6;
+            }
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .info-box h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #667eea;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        @media (max-width: 640px) {
+            .title {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .uploader {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"></div>
+            <h1 class="title">CardioVista</h1>
+            <p class="subtitle">Retinal Cardiovascular Risk Analyzer</p>
+        </div>
+
+        <div class="card">
+            <div class="section-title">Upload Retina Image</div>
+            <p class="hint">Select a retinal image to analyze cardiovascular risk factors using our AI model.</p>
+
+            <div class="uploader">
+                <input id="fileInput" type="file" accept="image/*">
+                <label for="fileInput">📁 Choose Image</label>
+                <div class="preview">
+                    <img id="retinaImg" alt="Retina Preview">
+                </div>
+                <div class="actions">
+                    <button id="predictBtn" class="btn primary" disabled>🔍 Analyze</button>
+                    <button id="clearBtn" class="btn" disabled>🗑️ Clear</button>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>How it works</h4>
+                <p>Upload a retinal fundus image and our deep learning model will analyze it to predict cardiovascular
+                    disease risk based on retinal biomarkers.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay">
+        <div class="panel">
+            <div class="spinner"></div>
+            <div class="loading-text">Analyzing</div>
+            <div class="dots">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const predictBtn = document.getElementById('predictBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const img = document.getElementById('retinaImg');
+        const overlay = document.getElementById('overlay');
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+            const url = URL.createObjectURL(file);
+            img.src = url;
+            img.style.display = 'block';
+            predictBtn.disabled = false;
+            clearBtn.disabled = false;
+        });
+
+        clearBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            img.src = '';
+            img.style.display = 'none';
+            predictBtn.disabled = true;
+            clearBtn.disabled = true;
+        });
+
+        predictBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append('file', file);
+            overlay.style.display = 'flex';
+            predictBtn.disabled = true;
+            clearBtn.disabled = true;
+            try {
+                const res = await fetch('/predict', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.id) {
+                    setTimeout(() => { window.location.href = `/results/${data.id}` }, 300);
+                }
+            } catch (e) {
+                alert('Error processing image. Please try again.');
+            }
+            finally {
+                overlay.style.display = 'none';
+                predictBtn.disabled = false;
+                clearBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
