@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diabetic Retinopathy Detection</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap');
+
+    :root {
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --text-primary: #1a202c;
+      --text-secondary: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 12px;
+      border-radius: 12px;
+      background: conic-gradient(from 180deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+      animation: rotate 8s linear infinite;
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(20px);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .hint {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .uploader {
+      border: 2px dashed rgba(102, 126, 234, 0.3);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      background: rgba(102, 126, 234, 0.04);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .uploader:hover {
+      border-color: rgba(102, 126, 234, 0.5);
+      background: rgba(102, 126, 234, 0.06);
+    }
+
+    .uploader.drag-over {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #upload-caption {
+      color: var(--text-secondary);
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    #image-preview {
+      max-width: 100%;
+      max-height: 280px;
+      border-radius: 12px;
+      margin-top: 16px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 11px 24px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn.primary {
+      background: var(--gradient-primary);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+    }
+
+    .btn.primary:hover:not(:disabled) {
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.45);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .loader {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid #e2e8f0;
+      border-top-color: #667eea;
+      animation: spin 0.7s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .result-container {
+      margin-top: 24px;
+    }
+
+    .severity-display {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    .severity-circle {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      border: 6px solid;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .severity-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .severity-confidence {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .cluster-info {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .cluster-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #667eea;
+    }
+
+    .cluster-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .cluster-item {
+      text-align: center;
+      padding: 8px;
+      background: white;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .cluster-item.active {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .cluster-number {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+
+    .cluster-label {
+      font-size: 10px;
+      color: var(--text-secondary);
+    }
+
+    .recommendation {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border: 2px solid rgba(102, 126, 234, 0.25);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .recommendation h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #667eea;
+    }
+
+    .recommendation p {
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @media (max-width: 640px) {
+      .title {
+        font-size: 28px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .uploader {
+        padding: 20px;
+      }
+
+      .cluster-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo"></div>
+      <h1 class="title">Diabetic Retinopathy</h1>
+      <p class="subtitle">AI-Powered Detection & Clustering Analysis</p>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Upload Retinal Image</div>
+      <p class="hint">Select a retinal fundus image to detect diabetic retinopathy and analyze severity clusters.</p>
+
+      <div class="uploader" id="file-drag">
+        <input id="file-upload" class="hidden" type="file" accept="image/*">
+        <div id="upload-caption">📁 Drop image here or click to select</div>
+        <img id="image-preview" class="hidden" alt="Preview">
+      </div>
+
+      <div class="actions">
+        <button id="submit-btn" class="btn primary" onclick="submitImage();" disabled>🔍 Analyze</button>
+        <button id="clear-btn" class="btn" onclick="clearImage();" disabled>🗑️ Clear</button>
+      </div>
+
+      <div id="loader-container" class="hidden">
+        <div class="loader"></div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <script>
+    const fileUpload = document.getElementById('file-upload');
+    const fileDrag = document.getElementById('file-drag');
+    const imagePreview = document.getElementById('image-preview');
+    const uploadCaption = document.getElementById('upload-caption');
+    const submitBtn = document.getElementById('submit-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const loaderContainer = document.getElementById('loader-container');
+
+    let selectedFile = null;
+
+    // File upload handling
+    fileUpload.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        handleFile(file);
+      }
+    });
+
+    fileDrag.addEventListener('click', () => fileUpload.click());
+
+    // Drag and drop
+    fileDrag.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileDrag.classList.add('drag-over');
+    });
+
+    fileDrag.addEventListener('dragleave', () => {
+      fileDrag.classList.remove('drag-over');
+    });
+
+    fileDrag.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileDrag.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        handleFile(file);
+      }
+    });
+
+    function handleFile(file) {
+      selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imagePreview.src = e.target.result;
+        imagePreview.classList.remove('hidden');
+        uploadCaption.textContent = file.name;
+        submitBtn.disabled = false;
+        clearBtn.disabled = false;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearImage() {
+      fileUpload.value = '';
+      selectedFile = null;
+      imagePreview.src = '';
+      imagePreview.classList.add('hidden');
+      uploadCaption.textContent = '📁 Drop image here or click to select';
+      submitBtn.disabled = true;
+      clearBtn.disabled = true;
+    }
+
+    function submitImage() {
+      if (!selectedFile) return;
+
+      loaderContainer.classList.remove('hidden');
+      submitBtn.disabled = true;
+      clearBtn.disabled = true;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const base64Image = e.target.result;
+
+        fetch('/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(base64Image)
+        })
+          .then(response => response.json())
+          .then(data => {
+            // Redirect to results page
+            window.location.href = `/results/${data.id}`;
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error processing image. Please try again.');
+            loaderContainer.classList.add('hidden');
+            submitBtn.disabled = false;
+            clearBtn.disabled = false;
+          });
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+
+
+  </script>
+</body>
+
+</html>

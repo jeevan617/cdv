@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetic Retinopathy • Health Advice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap');
+
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-success: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-warning: linear-gradient(135deg, #fee140 0%, #fa709a 100%);
+            --gradient-danger: linear-gradient(135deg, #fa709a 0%, #f5576c 100%);
+            --text-primary: #1a202c;
+            --text-secondary: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 12px;
+            border-radius: 12px;
+            background: conic-gradient(from 180deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+            animation: rotate 8s linear infinite;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .level-0 {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .level-1 {
+            background: linear-gradient(135deg, #fee140 0%, #feca57 100%);
+            color: white;
+        }
+
+        .level-2 {
+            background: var(--gradient-warning);
+            color: white;
+        }
+
+        .level-3,
+        .level-4 {
+            background: var(--gradient-danger);
+            color: white;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .advice-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .advice-item {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .advice-item:hover {
+            background: rgba(102, 126, 234, 0.08);
+            transform: translateX(4px);
+        }
+
+        .advice-item strong {
+            color: #667eea;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .advice-item p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 87, 108, 0.1) 0%, rgba(250, 112, 154, 0.1) 100%);
+            border: 2px solid rgba(245, 87, 108, 0.3);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .warning-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #f5576c;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-box p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn.primary {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn.primary:hover {
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.45);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+
+        @media (max-width: 640px) {
+            .back-button {
+                top: 12px;
+                left: 12px;
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/" class="back-button">← Back</a>
+    <div class="container">
+        <div class="header">
+            <div class="logo"></div>
+            <h1 class="title">Health Advice</h1>
+            <p class="subtitle">Personalized recommendations for diabetic retinopathy</p>
+            <div class="level-badge level-{{ level }}">Severity Level {{ level }}</div>
+        </div>
+
+        <div class="card">
+            {% if level == 0 %}
+            <div class="info-box">
+                <h3>✅ No Diabetic Retinopathy Detected</h3>
+                <p>Your retinal scan shows no signs of diabetic retinopathy. Continue maintaining your healthy lifestyle
+                    and diabetes management!</p>
+            </div>
+
+            <h2 class="section-title">Maintenance Recommendations</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>Regular Eye Exams</strong>
+                    <p>Continue annual comprehensive eye examinations to monitor your eye health.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Blood Sugar Control</strong>
+                    <p>Maintain good glycemic control with HbA1c levels below 7% as recommended by your doctor.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Healthy Lifestyle</strong>
+                    <p>Continue a balanced diet, regular exercise, and maintain a healthy weight.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Blood Pressure Management</strong>
+                    <p>Keep blood pressure under control (below 140/90 mmHg) to protect your eyes.</p>
+                </li>
+            </ul>
+
+            {% elif level == 1 %}
+            <div class="info-box">
+                <h3>⚠️ Mild Diabetic Retinopathy</h3>
+                <p>Mild changes have been detected in your retina. With proper management, progression can often be
+                    prevented.</p>
+            </div>
+
+            <h2 class="section-title">Important Actions</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>Ophthalmologist Follow-up</strong>
+                    <p>Schedule regular follow-ups with your ophthalmologist every 6-12 months.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Strict Blood Sugar Control</strong>
+                    <p>Work with your endocrinologist to optimize your diabetes management and maintain tight glycemic
+                        control.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Monitor Blood Pressure</strong>
+                    <p>Keep blood pressure well-controlled as hypertension can accelerate retinopathy progression.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Lifestyle Modifications</strong>
+                    <p>Adopt a diabetic-friendly diet, exercise regularly, and avoid smoking.</p>
+                </li>
+            </ul>
+
+            {% elif level == 2 %}
+            <div class="warning-box">
+                <h3>⚠️ Moderate Diabetic Retinopathy</h3>
+                <p>Moderate changes detected. Consultation with your ophthalmologist is important to develop a
+                    comprehensive treatment plan.</p>
+            </div>
+
+            <h2 class="section-title">Medical Consultation Required</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>Ophthalmologist Consultation</strong>
+                    <p>Schedule an appointment with your ophthalmologist for comprehensive evaluation and treatment
+                        planning.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Frequent Monitoring</strong>
+                    <p>More frequent eye exams (every 3-6 months) may be recommended to monitor progression.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Optimize Diabetes Control</strong>
+                    <p>Work closely with your healthcare team to achieve optimal blood sugar, blood pressure, and
+                        cholesterol levels.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Consider Treatment Options</strong>
+                    <p>Discuss potential treatments with your doctor, which may include laser therapy or injections if
+                        progression occurs.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Protect Your Vision</strong>
+                    <p>Avoid activities that may increase eye pressure. Report any vision changes immediately.</p>
+                </li>
+            </ul>
+
+            {% elif level == 3 %}
+            <div class="warning-box">
+                <h3>🚨 Severe Diabetic Retinopathy</h3>
+                <p>Severe retinopathy detected. Immediate consultation with a retinal specialist is strongly recommended
+                    to prevent vision loss.</p>
+            </div>
+
+            <h2 class="section-title">Urgent Recommendations</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>See a Retinal Specialist</strong>
+                    <p>Schedule an urgent appointment with a retinal specialist for comprehensive evaluation and
+                        treatment.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Treatment Planning</strong>
+                    <p>Discuss treatment options including laser photocoagulation, anti-VEGF injections, or other
+                        interventions.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Intensive Diabetes Management</strong>
+                    <p>Work with your endocrinologist to achieve the best possible glycemic control immediately.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Frequent Monitoring</strong>
+                    <p>Expect frequent follow-up appointments to monitor disease progression and treatment response.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Report Vision Changes</strong>
+                    <p>Immediately report any sudden vision changes, floaters, or flashes of light to your eye doctor.
+                    </p>
+                </li>
+            </ul>
+
+            {% elif level == 4 %}
+            <div class="warning-box">
+                <h3>🚨 Proliferative Diabetic Retinopathy - Urgent</h3>
+                <p>Advanced diabetic retinopathy detected. This is a serious condition requiring immediate medical
+                    attention to prevent severe vision loss.</p>
+            </div>
+
+            <h2 class="section-title">Immediate Action Required</h2>
+            <ul class="advice-list">
+                <li class="advice-item">
+                    <strong>Emergency Consultation</strong>
+                    <p>Contact a retinal specialist immediately for urgent evaluation and treatment. Do not delay.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Treatment Intervention</strong>
+                    <p>You will likely need prompt treatment such as laser surgery (panretinal photocoagulation) or
+                        anti-VEGF injections.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Vitrectomy Consideration</strong>
+                    <p>In some cases, vitrectomy surgery may be necessary. Discuss all options with your retinal
+                        specialist.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Aggressive Diabetes Control</strong>
+                    <p>Work intensively with your diabetes care team to optimize blood sugar, blood pressure, and
+                        overall health.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Vision Protection</strong>
+                    <p>Avoid heavy lifting, straining, or activities that increase intraocular pressure. Seek immediate
+                        care for any vision changes.</p>
+                </li>
+                <li class="advice-item">
+                    <strong>Close Follow-up</strong>
+                    <p>Expect very frequent monitoring and follow-up appointments to track treatment progress.</p>
+                </li>
+            </ul>
+            {% endif %}
+
+            <div class="info-box" style="margin-top: 24px;">
+                <h3>📋 General Eye Health Tips</h3>
+                <p>Maintain optimal blood sugar levels, control blood pressure and cholesterol, eat a diet rich in leafy
+                    greens and omega-3 fatty acids, exercise regularly, avoid smoking, and protect your eyes from UV
+                    exposure with sunglasses.</p>
+            </div>
+
+            <div class="actions">
+                <a href="/" class="btn">← New Analysis</a>
+                <a href="https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/diabetic-retinopathy"
+                    target="_blank" class="btn primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

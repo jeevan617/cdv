@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetic Retinopathy • Analysis</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap');
+
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-primary: #1a202c;
+            --text-secondary: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+            margin-bottom: 16px;
+        }
+
+        .severity-display {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+
+        .severity-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            border: 6px solid;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .severity-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .severity-percentage {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 10px 14px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.25);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .recommendation h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+
+        .recommendation p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn.primary {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn.primary:hover {
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.45);
+        }
+
+        .error-message {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            padding: 40px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+
+        @media (max-width: 640px) {
+            .back-button {
+                top: 12px;
+                left: 12px;
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% if error %}
+    <div class="container">
+        <div class="error-message">
+            <h1>⚠️ Results Not Found</h1>
+            <p>The requested analysis results could not be found.</p>
+            <div style="margin-top: 20px;">
+                <a href="/" class="btn primary">← Return Home</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <a href="/" class="back-button">← Back</a>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Analysis Results</h1>
+            <p class="subtitle">Diabetic Retinopathy Assessment</p>
+        </div>
+
+        <div class="card">
+            <div class="severity-display">
+                <div class="severity-circle"
+                    style="border-color: {{ '#43e97b' if data.level == 0 else '#fee140' if data.level == 1 else '#fa709a' if data.level == 2 else '#f5576c' if data.level == 3 else '#dc2626' }}">
+                    <div class="severity-label"
+                        style="color: {{ '#43e97b' if data.level == 0 else '#fee140' if data.level == 1 else '#fa709a' if data.level == 2 else '#f5576c' if data.level == 3 else '#dc2626' }}">
+                        {{ data.result }}
+                    </div>
+                    <div class="severity-percentage">{{ "%.1f"|format(data.display_pct) }}%</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Retinal Image</h2>
+            <div class="image-container">
+                <img src="{{ data.image_url }}" alt="Retinal scan" class="result-image">
+            </div>
+
+            <h2 class="section-title">Analysis Details</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-name">Severity Level</span>
+                    <span class="info-value">{{ data.level }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-name">Confidence</span>
+                    <span class="info-value">{{ "%.1f"|format(data.display_pct) }}%</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-name">Classification</span>
+                    <span class="info-value">{{ data.result }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-name">Status</span>
+                    <span class="info-value">{{ 'Normal' if data.level == 0 else 'Requires Attention' }}</span>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <h3>Recommendation</h3>
+                <p>
+                    {% if data.level == 0 %}
+                    No diabetic retinopathy detected. Continue regular eye examinations and maintain good blood sugar
+                    control.
+                    {% elif data.level == 1 %}
+                    Mild diabetic retinopathy detected. Schedule regular follow-ups with your ophthalmologist and
+                    maintain strict blood sugar control.
+                    {% elif data.level == 2 %}
+                    Moderate diabetic retinopathy detected. Consult with your ophthalmologist for a comprehensive
+                    treatment plan.
+                    {% elif data.level == 3 %}
+                    Severe diabetic retinopathy detected. Immediate consultation with a retinal specialist is
+                    recommended.
+                    {% else %}
+                    Proliferative diabetic retinopathy detected. Urgent medical attention required. Please consult a
+                    retinal specialist immediately.
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="actions">
+                <a href="/" class="btn">← New Analysis</a>
+                <a href="/advice/{{ data.level }}" class="btn primary">View Health Advice</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>
