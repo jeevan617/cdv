@@ -23,6 +23,7 @@ export default function Navbar() {
         <li><Link to="/" className={isActive("/") ? "active" : ""}>Home</Link></li>
         <li><Link to="/about" className={isActive("/about") ? "active" : ""}>About</Link></li>
         <li><Link to="/devs" className={isActive("/devs") ? "active" : ""}>Devs</Link></li>
+        <li><Link to="/doctor-login" className={isActive("/doctor-login") ? "active" : ""}>Doctor Portal</Link></li>
         <li><Link to="/login" className={`nav-btn ${isActive("/login") ? "active" : ""}`}>Login</Link></li>
         <li><Link to="/signup" className={`nav-btn primary ${isActive("/signup") ? "active" : ""}`}>Sign Up</Link></li>
       </ul>

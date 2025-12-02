@@ -1,0 +1,517 @@
+.consultation-container {
+    min-height: 100vh;
+    padding: 100px 24px 60px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+    position: relative;
+}
+
+.back-btn {
+    position: fixed;
+    top: 75px;
+    left: 20px;
+    z-index: 1000;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.back-btn:hover {
+    transform: translateX(-4px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+/* Risk Banner */
+.risk-banner {
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    padding: 24px 32px;
+    background: white;
+    border-radius: 16px;
+    border-left: 6px solid;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: slideInDown 0.6s ease;
+}
+
+.risk-icon {
+    font-size: 48px;
+    animation: pulse 2s infinite;
+}
+
+.risk-content h2 {
+    margin: 0 0 8px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px;
+    color: #1e293b;
+}
+
+.risk-content p {
+    margin: 0;
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* Recommendations Slideshow */
+.recommendations-section {
+    max-width: 1200px;
+    margin: 0 auto 50px;
+}
+
+.recommendations-section h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 24px 0;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.slideshow-container {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    padding: 48px 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    min-height: 200px;
+}
+
+.recommendation-slide {
+    position: absolute;
+    top: 48px;
+    left: 40px;
+    right: 40px;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none;
+}
+
+.recommendation-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.priority-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+}
+
+.priority-badge.urgent {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.priority-badge.high {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.priority-badge.moderate {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.priority-badge.low {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.recommendation-slide h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: #1e293b;
+}
+
+.recommendation-slide p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #64748b;
+    margin: 0;
+}
+
+.slideshow-dots {
+    text-align: center;
+    margin-top: 32px;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 6px;
+    background-color: #cbd5e1;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: scale(1.3);
+}
+
+.dot:hover {
+    background-color: #94a3b8;
+}
+
+/* Doctors Section */
+.doctors-section {
+    max-width: 1200px;
+    margin: 0 auto 50px;
+}
+
+.doctors-section h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 32px 0;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.doctor-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: fadeInUp 0.6s ease backwards;
+    animation-delay: calc(var(--index) * 0.1s);
+}
+
+.doctor-card:nth-child(1) {
+    --index: 0;
+}
+
+.doctor-card:nth-child(2) {
+    --index: 1;
+}
+
+.doctor-card:nth-child(3) {
+    --index: 2;
+}
+
+.doctor-card:nth-child(4) {
+    --index: 3;
+}
+
+.doctor-card:nth-child(5) {
+    --index: 4;
+}
+
+.doctor-card:nth-child(6) {
+    --index: 5;
+}
+
+.doctor-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.2);
+}
+
+.doctor-header {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.doctor-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.doctor-info h3 {
+    margin: 0 0 6px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.specialization {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0 0 4px 0;
+}
+
+.experience {
+    color: #64748b;
+    font-size: 13px;
+    margin: 0;
+}
+
+.doctor-details {
+    margin-bottom: 20px;
+}
+
+.doctor-details p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.doctor-details strong {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.doctor-details a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.doctor-details a:hover {
+    text-decoration: underline;
+}
+
+.doctor-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-call,
+.btn-email {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-call {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.btn-call:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.btn-email {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-email:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+}
+
+/* Email Alert Section */
+.email-alert-section {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s ease;
+}
+
+.email-alert-section h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0 0 24px 0;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #334155;
+}
+
+.form-group input {
+    padding: 14px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-send {
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+}
+
+.btn-send:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-send:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.email-status {
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    background: #dbeafe;
+    color: #1e40af;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+/* Animations */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .consultation-container {
+        padding: 90px 16px 40px;
+    }
+
+    .risk-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .risk-content h2 {
+        font-size: 24px;
+    }
+
+    .recommendations-section h2,
+    .doctors-section h2 {
+        font-size: 26px;
+    }
+
+    .slideshow-container {
+        padding: 32px 24px;
+    }
+
+    .recommendation-slide {
+        left: 24px;
+        right: 24px;
+    }
+
+    .doctors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .email-alert-section {
+        padding: 28px 20px;
+    }
+
+    .doctor-actions {
+        flex-direction: column;
+    }
+}

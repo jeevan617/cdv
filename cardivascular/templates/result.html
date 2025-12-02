@@ -261,7 +261,9 @@
 
             <div class="actions">
                 <a href="/" class="btn">← New Analysis</a>
-                <a href="/advice/{{ data.level }}" class="btn primary">View Advice</a>
+                <a href="/advice/{{ data.level }}" class="btn">View Advice</a>
+                <a href="http://localhost:3000/consultation?riskLevel={{ 'low' if data.level <= 1 else 'medium' if data.level == 2 else 'high' }}&predictionType=cardiovascular"
+                    class="btn primary">Consult Doctor</a>
             </div>
         </div>
     </div>

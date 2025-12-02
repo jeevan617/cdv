@@ -98,7 +98,7 @@ def predict():
 
         # Process result to find probability and class of prediction
         pred_proba = "{:.3f}".format(np.amax(preds))    # Max probability
-        pred_class = np.argmax(np.squeeze(preds))
+        pred_class = int(np.argmax(np.squeeze(preds)))
 
         diagnosis = ["No DR", "Mild", "Moderate", "Severe", "Proliferative DR"]
         result = diagnosis[pred_class]               # Convert to string
@@ -138,6 +138,6 @@ if __name__ == '__main__':
     # app.run(port=5002, threaded=False)
 
     # Serve the app with gevent
-    http_server = WSGIServer(('0.0.0.0', 5003), app)
+    http_server = WSGIServer(('0.0.0.0', 5002), app)
     http_server.serve_forever()
 

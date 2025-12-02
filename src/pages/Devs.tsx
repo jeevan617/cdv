@@ -3,10 +3,10 @@ import "./Devs.css";
 
 export default function Devs() {
   const developers = [
-    { name: "Trupathi Lekhana", role: "Lead Developer(7k loss)", gradient: "var(--gradient-primary)" },
-    { name: "Spoorthi ❌ spurthi ✅", role: "ML Engineer", gradient: "var(--gradient-tertiary)" },
-    { name: "mathe ye ella Madumitha", role: "Full Stack Developer", gradient: "var(--gradient-secondary)" },
-    { name: "Slient Sandeep", role: "UI/UX Designer", gradient: "var(--gradient-success)" },
+    { name: "Lekhana M", role: "Lead Developer(7k loss)", gradient: "var(--gradient-primary)" },
+    { name: "spurthi S N", role: "ML Engineer", gradient: "var(--gradient-tertiary)" },
+    { name: "Madhumitha R K", role: "Full Stack Developer", gradient: "var(--gradient-secondary)" },
+    { name: "Sandeep Kumar S H", role: "UI/UX Designer", gradient: "var(--gradient-success)" },
   ];
 
   return (
@@ -14,7 +14,7 @@ export default function Devs() {
       <div className="devs-background"></div>
       <div className="devs-header">
         <h1 className="gradient-text">Meet Our Team</h1>
-        <p className="devs-intro">The talented individuals who lost 7k</p>
+        <p className="devs-intro">The Talented individuals </p>
       </div>
 
       <div className="dev-grid">

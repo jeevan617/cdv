@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./PredictionSelect.css";
 
 export default function PredictionSelect() {
@@ -16,6 +16,7 @@ export default function PredictionSelect() {
     const handleLogout = () => {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("userEmail");
+        localStorage.removeItem("authToken");
         navigate("/login");
     };
 
@@ -28,7 +29,7 @@ export default function PredictionSelect() {
             </div>
 
             <div className="prediction-grid">
-                <a href="http://127.0.0.1:5005" className="prediction-card">
+                <a href="http://127.0.0.1:5001" className="prediction-card">
                     <div className="prediction-icon cardiovascular-icon">
                         <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
@@ -41,7 +42,7 @@ export default function PredictionSelect() {
                     </div>
                 </a>
 
-                <a href="http://127.0.0.1:5003" className="prediction-card">
+                <a href="http://127.0.0.1:5002" className="prediction-card">
                     <div className="prediction-icon diabetic-icon">
                         <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" strokeWidth="2">
                             <circle cx="12" cy="12" r="10" />
